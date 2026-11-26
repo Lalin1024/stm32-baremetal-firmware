@@ -40,6 +40,17 @@ void dma_gps_receive(const char* data,uint8_t size)
 
 	DMA1_Stream5->CR&=~(3u<<11);
 
+	DMA1_Stream5->CR|=(1U<<1);
+
 	DMA1_Stream5->CR|=(1U<<0);
 
+}
+
+
+void DMA1_Stream5_IRQHandler()
+{
+	if(DMA1->HISR & (1U<<11))
+	{
+		DMA1->HISR|=(1U<<11);
+	}
 }

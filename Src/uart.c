@@ -12,6 +12,8 @@
 #define USART2_EN	(1U<<17)
 #define	GPIOA_EN	(1U<<0)
 
+static void setBaudRate(USART_TypeDef* USART,uint32_t baud);
+
 void uart_init()
 {
 	RCC->APB1ENR|=USART2_EN;
@@ -36,8 +38,17 @@ void uart_init()
 
 }
 
+void disable_gnss(uint8_t  *arr,uint8_t size)
+{
+	for(int i=0;i<size;i++)
+	{
+		while(!(USART2->ISR & (1U<<7))){}
+					USART2->TDR=arr[i];
+	}
+}
 
-static void setBudRate(USART_TypeDef* USART,uint32_t baud)
+
+static void setBaudRate(USART_TypeDef* USART,uint32_t baud)
 {
 	USART->BRR=((SYSCLK)/baud);
 }
