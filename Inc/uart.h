@@ -12,6 +12,6 @@
 
 void uart_init();
 
-static void setBudRate(USART_TypeDef* USART,uint32_t baud);
+void disable_gnss(uint8_t  *arr,uint8_t size);
 
 #endif /* UART_H_ */

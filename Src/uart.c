@@ -28,11 +28,11 @@ void uart_init()
 	USART2->CR1&=~(1U<<12);
 	USART2->CR2&=~(3U<<12);
 
-	USART2->CR3|=(1U<<7);
+	USART2->CR3|=(1U<<6);
 
 	setBaudRate(USART2,9600);
 
-	USART2->CR1|=(1U<<3);
+	USART2->CR1|=((1U<<3)|(1U<<2));
 
 	USART2->CR1|=(1U<<13);
 
@@ -42,8 +42,8 @@ void disable_gnss(uint8_t  *arr,uint8_t size)
 {
 	for(int i=0;i<size;i++)
 	{
-		while(!(USART2->ISR & (1U<<7))){}
-					USART2->TDR=arr[i];
+		while(!(USART2->SR & (1U<<7))){}
+					USART2->DR=arr[i];
 	}
 }
 
